@@ -51,6 +51,9 @@ type Transaction interface {
 
 	// Memo is a string description of the transaction.
 	Memo() string
+	
+	// Payee is a string recipient for the transaction.
+	Payee() string
 
 	// Status indicates if the transaction is cleared. The value will be
 	// UnknownStatus if the transaction data did not specify a value for this
@@ -62,6 +65,7 @@ type transaction struct {
 	date   time.Time
 	amount int
 	memo   string
+	payee string
 	status ClearedStatus
 }
 
@@ -75,6 +79,10 @@ func (t *transaction) Amount() int {
 
 func (t *transaction) Memo() string {
 	return t.memo
+}
+
+func (t *transaction) Payee() string {
+	return t.payee
 }
 
 func (t *transaction) Status() ClearedStatus {
@@ -105,6 +113,10 @@ func (t *transaction) parseTransactionField(line string, config Config) error {
 
 	case 'M':
 		t.memo = line[1:]
+		return nil
+
+	case 'P':
+		t.payee = line[1:]
 		return nil
 
 	case 'C':
