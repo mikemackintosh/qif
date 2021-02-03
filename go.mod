@@ -1,4 +1,4 @@
-module qif
+module github.com/mikemackintosh/qif
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
